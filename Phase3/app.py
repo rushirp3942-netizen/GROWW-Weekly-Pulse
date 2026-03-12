@@ -145,8 +145,15 @@ def main():
         </div>
     """, unsafe_allow_html=True)
     
-    app_id = st.sidebar.text_input("App ID", value="com.nextbillion.groww")
     weeks = st.sidebar.slider("Weeks to analyze", 1, 12, 12)
+    
+    # Debug Info (Small)
+    st.sidebar.markdown(f"""
+        <div style="font-size: 0.7em; color: #7C7E8C; margin-top: 20px;">
+            Local Data: {'✅ Found' if os.path.exists('../reviews.json') else '❌ Not Found'}<br>
+            App ID: {app_id}
+        </div>
+    """, unsafe_allow_html=True)
     
     st.markdown(f'<div class="sync-badge">Last Synced: {datetime.now().strftime("%I:%M %p")}</div>', unsafe_allow_html=True)
     st.title("📈 Weekly Pulse Report")
@@ -164,7 +171,11 @@ def main():
         with st.spinner("Fetching latest reviews..."):
             reviews_data = fetch_reviews(app_id=app_id, weeks=weeks)
             save_reviews(reviews_data, filename="../reviews.json")
-            st.sidebar.success(f"Fetched {len(reviews_data)} reviews!")
+            
+            if not reviews_data:
+                st.sidebar.error("❌ No reviews found matching filters. (Try increasing 'Weeks' or check App ID)")
+            else:
+                st.sidebar.success(f"✅ Fetched {len(reviews_data)} high-quality reviews!")
         
         if api_key:
             with st.spinner("Analyzing with Groq AI..."):
