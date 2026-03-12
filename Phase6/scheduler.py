@@ -40,10 +40,13 @@ def run_weekly_pulse():
         # Prepare attachments
         print("[4/4] Dispatching email with Excel-friendly attachment...")
         
-        # Save as CSV for better previewing
+        # Save as CSV for better previewing (Sanitized)
         df = pd.DataFrame(reviews)
+        cols_to_keep = ['content', 'rating', 'at', 'thumbs_up', 'version']
+        df_sanitized = df[[c for c in cols_to_keep if c in df.columns]]
+        
         csv_path = os.path.join(os.path.dirname(__file__), '..', 'reviews_report.csv')
-        df.to_csv(csv_path, index=False, encoding='utf-8-sig') # utf-8-sig for Excel compatibility
+        df_sanitized.to_csv(csv_path, index=False, encoding='utf-8-sig')
         
         success, message = send_pulse_email(html, attachment_path=csv_path)
         

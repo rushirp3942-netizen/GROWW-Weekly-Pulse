@@ -331,7 +331,13 @@ def main():
                     if os.path.exists(reviews_json_path):
                         with open(reviews_json_path, "r", encoding="utf-8") as f:
                             reviews_data = json.load(f)
-                        pd.DataFrame(reviews_data).to_csv(attachment_path, index=False, encoding='utf-8-sig')
+                        
+                        # Sanitize: Remove PII (userName, reviewId)
+                        df = pd.DataFrame(reviews_data)
+                        cols_to_keep = ['content', 'rating', 'at', 'thumbs_up', 'version']
+                        # Intersection ensures we don't crash if columns are slightly different
+                        df_sanitized = df[[c for c in cols_to_keep if c in df.columns]]
+                        df_sanitized.to_csv(attachment_path, index=False, encoding='utf-8-sig')
                     
                     # Fail-safe: Handle both old (bool) and new (tuple) return values
                     # pass secrets as needed
