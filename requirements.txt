@@ -1,0 +1,6 @@
+streamlit
+google-play-scraper
+groq
+python-dotenv
+pandas
+langdetect
