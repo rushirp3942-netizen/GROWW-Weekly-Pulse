@@ -252,21 +252,24 @@ def main():
 
         st.markdown("---")
         if st.button("📧 Generate Premium HTML Email"):
-            st.success("Premium HTML email draft generated!")
-            html_email = generate_html_email(report)
-            st.session_state['last_html_email'] = html_email
-            
-            # Save for Phase 4 records
-            with open("../Phase4/email_draft.html", "w", encoding="utf-8") as f:
-                f.write(html_email)
+            with st.spinner("Generating premium draft..."):
+                st.success("Premium HTML email draft generated!")
+                html_email = generate_html_email(report)
+                st.session_state['last_html_email'] = html_email
                 
+                # Save for Phase 4 records
+                with open("../Phase4/email_draft.html", "w", encoding="utf-8") as f:
+                    f.write(html_email)
+
+        if 'last_html_email' in st.session_state:
+            html_email = st.session_state['last_html_email']
+            st.markdown("---")
             st.write("### 📝 Email Preview")
             st.components.v1.html(html_email, height=600, scrolling=True)
             
             with st.expander("📄 View Source HTML"):
                 st.code(html_email, language="html")
-
-        if 'last_html_email' in st.session_state:
+                
             st.markdown("---")
             if st.button("🚀 Send Pulse to My Email"):
                 with st.spinner("Sending email with reviews.json attachment..."):
