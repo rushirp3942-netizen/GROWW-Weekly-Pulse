@@ -154,6 +154,7 @@ def main():
         </div>
     """, unsafe_allow_html=True)
     
+    app_id = st.sidebar.text_input("App ID", value="com.nextbillion.groww")
     weeks = st.sidebar.slider("Weeks to analyze", 1, 12, 12)
     
     # Debug Info (Small)
