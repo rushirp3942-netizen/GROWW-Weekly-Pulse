@@ -94,11 +94,14 @@ def fetch_reviews(app_id='com.nextbillion.groww', weeks=12):
             
     return all_reviews
 
-def save_reviews(reviews_data, filename='../reviews.json'):
-    # Saving to parent directory for access by other phases
+def save_reviews(reviews_data, filename=None):
+    if filename is None:
+        # Default to reviews.json in the current working directory
+        filename = 'reviews.json'
+    
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(reviews_data, f, ensure_ascii=False, indent=4)
-    print(f"Saved {len(reviews_data)} reviews to {filename}")
+    print(f"Saved {len(reviews_data)} reviews to {os.path.abspath(filename)}")
 
 if __name__ == "__main__":
     # Test fetch for GROWW (com.nextbillion.groww)

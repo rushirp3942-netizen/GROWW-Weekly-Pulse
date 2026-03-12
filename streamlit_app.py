@@ -165,8 +165,8 @@ def main():
     if st.sidebar.button("🔄 Sync & Analyze"):
         with st.spinner("Fetching latest reviews..."):
             reviews_data = fetch_reviews(app_id=app_id, weeks=weeks)
-            # Standard path for reviews.json in root
-            save_reviews(reviews_data) 
+            # Save to standard root path
+            save_reviews(reviews_data, filename="reviews.json") 
         
         if api_key:
             with st.spinner("Analyzing with Groq AI..."):
@@ -200,13 +200,33 @@ def main():
             """, unsafe_allow_html=True)
 
         # Top Stats
+        # Top Stats - Custom Styled Cards to prevent truncation
         col1, col2, col3 = st.columns(3)
+        reviews_count = st.session_state.get('reviews_count', 0)
+        avg_rating = st.session_state.get('avg_rating', 0)
+        pulse_date = datetime.now().strftime("%d %b, %Y")
+        
         with col1:
-            st.metric("Total Reviews Analyzed", st.session_state.get('reviews_count', 0))
+            st.markdown(f"""
+                <div class="stMetric">
+                    <div style="color: #7C7E8C; font-size: 0.9em; font-weight: 500; margin-bottom: 8px;">Total Reviews Analyzed</div>
+                    <div style="color: #44475B; font-size: 2.2em; font-weight: 700;">{reviews_count}</div>
+                </div>
+            """, unsafe_allow_html=True)
         with col2:
-            st.metric("Average Rating", f"{st.session_state.get('avg_rating', 0):.2f} ⭐")
+            st.markdown(f"""
+                <div class="stMetric">
+                    <div style="color: #7C7E8C; font-size: 0.9em; font-weight: 500; margin-bottom: 8px;">Average Rating</div>
+                    <div style="color: #44475B; font-size: 2.2em; font-weight: 700;">{avg_rating:.2f} <span style="font-size: 0.8em;">⭐</span></div>
+                </div>
+            """, unsafe_allow_html=True)
         with col3:
-            st.metric("Pulse Date", datetime.now().strftime("%B %d, %Y"))
+            st.markdown(f"""
+                <div class="stMetric">
+                    <div style="color: #7C7E8C; font-size: 0.9em; font-weight: 500; margin-bottom: 8px;">Pulse Date</div>
+                    <div style="color: #44475B; font-size: 1.8em; font-weight: 700; white-space: nowrap;">{pulse_date}</div>
+                </div>
+            """, unsafe_allow_html=True)
 
         st.markdown("### 🎯 Top Feedback Themes")
         themes = report.get('themes', [])
