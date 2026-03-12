@@ -134,9 +134,15 @@ def main():
         
     # Load existing data on startup
     existing_reviews, existing_report = load_local_data()
+    
+    # Initialize session state from files if not already set
     if 'report' not in st.session_state and existing_report:
         st.session_state['report'] = existing_report
+        
+    if 'reviews_count' not in st.session_state:
         st.session_state['reviews_count'] = len(existing_reviews)
+        
+    if 'avg_rating' not in st.session_state:
         st.session_state['avg_rating'] = pd.DataFrame(existing_reviews)['rating'].mean() if existing_reviews else 0
 
     st.sidebar.markdown(f"""
@@ -167,6 +173,7 @@ def main():
             reviews_data = fetch_reviews(app_id=app_id, weeks=weeks)
             # Save to standard root path
             save_reviews(reviews_data, filename="reviews.json") 
+            st.sidebar.success(f"Fetched {len(reviews_data)} reviews!")
         
         if api_key:
             with st.spinner("Analyzing with Groq AI..."):
