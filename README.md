@@ -41,8 +41,7 @@ RECIPIENT_EMAIL=stakeholder_email@example.com
 
 ### Dashboard (User Interface)
 ```bash
-cd Phase3
-streamlit run app.py
+streamlit run streamlit_app.py
 ```
 
 ### Manual Pipeline Execution
@@ -56,10 +55,11 @@ Follow instructions in `walkthrough.md` to set up **Task Scheduler** pointing to
 ## 📁 Project Structure
 - `Phase1`: Scraper logic
 - `Phase2`: Groq AI Analyzer
-- `Phase3`: Streamlit Dashboard
+- `Phase3`: Legacy Dashboard files
 - `Phase4`: Email Generation & Mailer
 - `Phase5`: Verification Scripts
 - `Phase6`: Automation Scheduler
+- `streamlit_app.py`: Main deployment entry point
 
 ---
 Developed as an autonomous insights engine. 🍀
