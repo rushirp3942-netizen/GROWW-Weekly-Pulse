@@ -18,8 +18,8 @@ Automated weekly analysis of Play Store reviews using Groq LLM (Llama 3). Transf
 ### 2. Installation
 Clone the repository and install dependencies:
 ```bash
-git clone <your-repo-url>
-cd Reviews
+git clone https://github.com/rushirp3942-netizen/GROWW-Weekly-Pulse.git
+cd GROWW-Weekly-Pulse
 pip install -r requirements.txt
 ```
 
