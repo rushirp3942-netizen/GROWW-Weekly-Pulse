@@ -332,7 +332,8 @@ def main():
                     # Fail-safe: Handle both old (bool) and new (tuple) return values
                     result = send_pulse_email(
                         st.session_state['last_html_email'], 
-                        attachment_path=attachment_path
+                        attachment_path=attachment_path,
+                        preamble="Hi Rushi, your weekly GROWW review pulse is ready, highlighting key users' feedback and issues to focus on."
                     )
                     
                     if isinstance(result, tuple):

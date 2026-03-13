@@ -41,11 +41,6 @@ def generate_html_email(report):
             </div>
             
             <div style="padding: 30px;">
-                <p style="color: #333; font-size: 16px; margin-bottom: 25px;">
-                    Hi Rushi,<br>
-                    Your weekly Groww review pulse is ready, highlighting key user feedback and issues to focus on.
-                </p>
-                
                 <div style="background-color: #f0f7ff; padding: 20px; border-radius: 10px; border: 1px solid #d0e3ff; margin-bottom: 30px;">
                     <h2 style="margin-top: 0; font-size: 18px; color: #0056b3;">📝 Executive Summary</h2>
                     <p style="margin: 0; color: #334d6e; line-height: 1.6;">{report.get('pulse_summary', '')}</p>

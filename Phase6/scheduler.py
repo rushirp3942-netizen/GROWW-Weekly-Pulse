@@ -48,7 +48,11 @@ def run_weekly_pulse():
         csv_path = os.path.join(os.path.dirname(__file__), '..', 'reviews_report.csv')
         df_sanitized.to_csv(csv_path, index=False, encoding='utf-8-sig')
         
-        success, message = send_pulse_email(html, attachment_path=csv_path)
+        success, message = send_pulse_email(
+            html, 
+            attachment_path=csv_path,
+            preamble="Hi Rushi, your weekly GROWW review pulse is ready, highlighting key users' feedback and issues to focus on."
+        )
         
         if success:
             print("[OK] Weekly Pulse successfully sent!")

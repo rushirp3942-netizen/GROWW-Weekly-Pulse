@@ -11,9 +11,9 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
-def send_pulse_email(html_content, attachment_path=None):
+def send_pulse_email(html_content, attachment_path=None, preamble=None):
     """
-    Sends the pulse report email with optional attachment.
+    Sends the pulse report email with optional attachment and preamble.
     """
     # Get configuration from .env
     smtp_server = os.getenv("SMTP_SERVER")
@@ -31,8 +31,15 @@ def send_pulse_email(html_content, attachment_path=None):
     msg['To'] = recipient_email
     msg['Subject'] = f"GROWW Weekly Pulse Report - {datetime.now().strftime('%Y-%m-%d')}"
 
+    # Handle Preamble and HTML Body consolidation
+    final_html = html_content
+    if preamble:
+        # Prepend preamble as a simple styled paragraph
+        preamble_html = f'<p style="font-family: Arial, sans-serif; font-size: 16px; color: #333; margin-bottom: 20px;">{preamble}</p>'
+        final_html = preamble_html + html_content
+
     # Attach HTML body
-    msg.attach(MIMEText(html_content, 'html'))
+    msg.attach(MIMEText(final_html, 'html'))
 
     # Attach file if provided
     if attachment_path and os.path.exists(attachment_path):
