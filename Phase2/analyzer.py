@@ -70,7 +70,7 @@ class GroqAnalyzer:
         """
 
         completion = self.client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="openai/gpt-oss-120b",
             messages=[
                 {"role": "system", "content": "You are a professional Product Analyst at a top fintech company."},
                 {"role": "user", "content": prompt}
