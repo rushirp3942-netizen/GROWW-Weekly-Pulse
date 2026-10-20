@@ -1,7 +1,7 @@
+import ssl
 import os
 import json
 import smtplib
-import ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
@@ -56,9 +56,9 @@ def send_pulse_email(html_content, attachment_path=None, preamble=None):
         )
         msg.attach(part)
 
-    # Send email
+       # Send email
     try:
-       with smtplib.SMTP(smtp_server, smtp_port, timeout=30) as server:
+        with smtplib.SMTP(smtp_server, smtp_port, timeout=30) as server:
             server.ehlo()
             server.starttls(context=ssl.create_default_context())
             server.ehlo()
