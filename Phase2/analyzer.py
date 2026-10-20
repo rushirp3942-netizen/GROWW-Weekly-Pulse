@@ -20,7 +20,7 @@ class GroqAnalyzer:
         """
         # Select a representative sample (latest, highest impact, and mixed sentiment)
         # We'll take the latest 150 reviews to stay within token limits while being comprehensive.
-        sample_size = min(len(reviews_data), 150)
+        sample_size = min(len(reviews_data), 50)
         reviews_for_ai = [
             f"ID: {r.get('review_id')} | Rating: {r['rating']} | Content: {r['content']}" 
             for r in reviews_data[:sample_size]
