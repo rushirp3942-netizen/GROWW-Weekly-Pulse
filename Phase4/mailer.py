@@ -55,19 +55,27 @@ def send_pulse_email(html_content, attachment_path=None, preamble=None):
             f"attachment; filename= {filename}",
         )
         msg.attach(part)
-
-       # Send email
+        
+    # Send email
+    stage = "connecting to SMTP server"
     try:
         with smtplib.SMTP(smtp_server, smtp_port, timeout=30) as server:
+            stage = "starting TLS"
             server.ehlo()
             server.starttls(context=ssl.create_default_context())
+
+            stage = "logging in"
             server.ehlo()
             server.login(sender_email, sender_password)
+
+            stage = "sending message"
             server.send_message(msg)
+
         return True, "Email sent successfully"
+
     except Exception as e:
-        error_msg = str(e)
-        print(f"Failed to send email: {error_msg}")
+        error_msg = f"Failed during {stage}: {type(e).__name__}: {e}"
+        print(error_msg)
         return False, error_msg
 
 if __name__ == "__main__":
